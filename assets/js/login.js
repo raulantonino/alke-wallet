@@ -7,6 +7,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     if (email === "admin@admin.com" && password === "1234") {
         window.location.href = "menu.html";
     } else {
-        document.getElementById("error").style.display = "block";
+        document.getElementById("error").classList.remove("d-none");
+
     }
 });
