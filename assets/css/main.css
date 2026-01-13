@@ -24,3 +24,46 @@ body {
     background-color: var(--primary-dark);
     border-color: var(--primary-dark);
 }
+
+.card {
+    border-radius: 14px;
+}
+
+.navbar {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.btn-outline-primary {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+h2 {
+    letter-spacing: -0.5px;
+}
+
+.card {
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #f8fafc 100%
+    );
+}
+
+.navbar-brand {
+    color: var(--primary);
+}
+
+h2 {
+    font-size: 2.2rem;
+}
+
+.card p {
+    font-size: 0.9rem;
+    letter-spacing: 0.4px;
+}
