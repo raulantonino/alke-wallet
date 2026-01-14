@@ -1,0 +1,94 @@
+/*********************************
+ * VARIABLES (paleta / tipografía)
+ *********************************/
+:root {
+  --primary: #2563EB;
+  --primary-dark: #1E40AF;
+
+  --background: #F8FAFC;
+  --text: #0F172A;
+  --muted: #64748B;
+
+  --success: #16A34A;
+}
+
+/*********************************
+ * BASE (body / tipografía)
+ *********************************/
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--background);
+  color: var(--text);
+}
+
+/*********************************
+ * COMPONENTES (Bootstrap override)
+ *********************************/
+
+/* Botón primario */
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  padding: 10px;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+/* Botón outline primario */
+.btn-outline-primary {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary);
+  color: #ffffff;
+}
+
+/* Tarjetas */
+.card {
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+/* Navbar */
+.navbar {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.navbar-brand {
+  color: var(--primary);
+}
+
+/*********************************
+ * TIPOGRAFÍA (títulos / textos)
+ *********************************/
+h2 {
+  font-size: 2.2rem;
+  letter-spacing: -0.5px;
+}
+
+.card p {
+  font-size: 0.9rem;
+  letter-spacing: 0.4px;
+}
+
+/*********************************
+ * LISTAS (movimientos)
+ *********************************/
+.list-group-item {
+  border: 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/*********************************
+ * UTILITIES
+ *********************************/
+/* Permite que text-truncate funcione bien dentro de flex */
+.min-w-0 {
+  min-width: 0;
+}
