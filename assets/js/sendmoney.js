@@ -1,4 +1,12 @@
 /*********************************
+ * ENVIAR DINERO
+ * - Muestra saldo desde localStorage ("saldo")
+ * - Autocomplete de contactos (lista ficticia)
+ * - Permite "agregar contacto" con prompt
+ * - Resta saldo y guarda transacción en "transacciones"
+ *********************************/
+
+/*********************************
  * DATOS (contactos ficticios)
  *********************************/
 const contacts = [
@@ -10,14 +18,18 @@ const contacts = [
 ];
 
 /*********************************
- * VARIABLES DEL DOM
+ * DOM (elementos de la página)
  *********************************/
 const searchInput = document.getElementById("searchContact");
 const contactsList = document.getElementById("contactsList");
 const amountInput = document.getElementById("amount");
 const sendButton = document.getElementById("sendMoneyBtn");
 const balanceSpan = document.getElementById("balance");
+const addContactBtn = document.getElementById("btnAddContactCard");
 
+/*********************************
+ * ESTADO (variables de apoyo)
+ *********************************/
 let selectedContact = null;
 
 /*********************************
@@ -26,8 +38,8 @@ let selectedContact = null;
 
 // Mostrar saldo desde localStorage
 function loadBalance() {
-  const balance = localStorage.getItem("saldo") || 0;
-  balanceSpan.textContent = `$${Number(balance).toLocaleString("es-CL")}`;
+  const saldo = Number(localStorage.getItem("saldo")) || 0;
+  balanceSpan.textContent = `$ ${saldo.toLocaleString("es-CL")}`;
 }
 
 // Renderizar lista de contactos
@@ -40,11 +52,12 @@ function renderContacts(list) {
     return;
   }
 
-  list.forEach(contact => {
+  list.forEach((contact) => {
     const li = document.createElement("li");
     li.className = "list-group-item list-group-item-action";
     li.textContent = contact.name;
 
+    // Seleccionar contacto desde la lista
     li.addEventListener("click", () => {
       selectedContact = contact;
       searchInput.value = contact.name;
@@ -59,20 +72,26 @@ function renderContacts(list) {
  * EVENTOS
  *********************************/
 
-// Buscar contacto
+// Buscar contacto (filtra mientras escribes)
 searchInput.addEventListener("keyup", () => {
   const value = searchInput.value.toLowerCase();
-  const filtered = contacts.filter(contact =>
+
+  // Si el usuario vuelve a escribir, obligamos a seleccionar de nuevo
+  selectedContact = null;
+
+  const filtered = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(value)
   );
+
   renderContacts(filtered);
 });
 
 // Enviar dinero (simulado)
 sendButton.addEventListener("click", () => {
   const amount = Number(amountInput.value);
-  const balance = Number(localStorage.getItem("saldo")) || 0;
+  const saldo = Number(localStorage.getItem("saldo")) || 0;
 
+  // Validaciones
   if (!selectedContact) {
     alert("Selecciona un contacto");
     return;
@@ -83,21 +102,22 @@ sendButton.addEventListener("click", () => {
     return;
   }
 
-  if (amount > balance) {
+  if (amount > saldo) {
     alert("Saldo insuficiente");
     return;
   }
 
+  // Confirmación
   const confirmSend = confirm(
     `¿Seguro que deseas enviar $${amount.toLocaleString("es-CL")} a ${selectedContact.name}?`
   );
-
   if (!confirmSend) return;
 
-  const newBalance = balance - amount;
+  // Actualizar saldo
+  const newBalance = saldo - amount;
   localStorage.setItem("saldo", newBalance);
 
-  // Guardar transacción
+  // Guardar transacción (historial)
   const transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
   transacciones.unshift({
     tipo: "Envío",
@@ -113,27 +133,25 @@ sendButton.addEventListener("click", () => {
   });
   localStorage.setItem("transacciones", JSON.stringify(transacciones));
 
-
+  // Limpiar / actualizar UI
   loadBalance();
   amountInput.value = "";
   alert("Dinero enviado correctamente");
 });
 
-/*********************************
- * INICIO
- *********************************/
-loadBalance();
-renderContacts(contacts);
-
-document.getElementById("btnAddContactCard").addEventListener("click", () => {
+// Agregar contacto (rápido) con prompt
+addContactBtn.addEventListener("click", () => {
   const nombre = prompt("Nombre del nuevo contacto:");
   if (!nombre) return;
 
   const limpio = nombre.trim();
   if (!limpio) return;
 
-  // evitar duplicados
-  const existe = contacts.some(c => c.name.toLowerCase() === limpio.toLowerCase());
+  // Evitar duplicados
+  const existe = contacts.some(
+    (c) => c.name.toLowerCase() === limpio.toLowerCase()
+  );
+
   if (existe) {
     alert("Ese contacto ya existe");
     return;
@@ -143,3 +161,8 @@ document.getElementById("btnAddContactCard").addEventListener("click", () => {
   renderContacts(contacts);
 });
 
+/*********************************
+ * INICIO
+ *********************************/
+loadBalance();
+renderContacts(contacts);
