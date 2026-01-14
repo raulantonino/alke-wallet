@@ -28,6 +28,23 @@ function confirmarDeposito() {
     saldo += monto;
     localStorage.setItem("saldo", saldo);
 
+    // Guardar transacción
+    const transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
+    transacciones.unshift({
+     tipo: "Depósito",
+    monto: monto,
+    detalle: "Depósito a la cuenta",
+    fecha: new Date().toLocaleString("es-CL", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit"
+    })
+    });
+    localStorage.setItem("transacciones", JSON.stringify(transacciones));
+
+
     alert("Depósito realizado con éxito");
 
     // limpiar input

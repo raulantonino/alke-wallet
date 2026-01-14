@@ -97,6 +97,23 @@ sendButton.addEventListener("click", () => {
   const newBalance = balance - amount;
   localStorage.setItem("saldo", newBalance);
 
+  // Guardar transacción
+  const transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
+  transacciones.unshift({
+    tipo: "Envío",
+    monto: amount,
+    detalle: `Envío a ${selectedContact.name}`,
+    fecha: new Date().toLocaleString("es-CL", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  });
+  localStorage.setItem("transacciones", JSON.stringify(transacciones));
+
+
   loadBalance();
   amountInput.value = "";
   alert("Dinero enviado correctamente");
