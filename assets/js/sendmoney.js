@@ -124,3 +124,22 @@ sendButton.addEventListener("click", () => {
  *********************************/
 loadBalance();
 renderContacts(contacts);
+
+document.getElementById("btnAddContactCard").addEventListener("click", () => {
+  const nombre = prompt("Nombre del nuevo contacto:");
+  if (!nombre) return;
+
+  const limpio = nombre.trim();
+  if (!limpio) return;
+
+  // evitar duplicados
+  const existe = contacts.some(c => c.name.toLowerCase() === limpio.toLowerCase());
+  if (existe) {
+    alert("Ese contacto ya existe");
+    return;
+  }
+
+  contacts.unshift({ name: limpio });
+  renderContacts(contacts);
+});
+

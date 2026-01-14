@@ -11,41 +11,56 @@ function confirmarDeposito() {
     const inputAmount = document.getElementById("amount");
     const monto = Number(inputAmount.value);
     let saldo = Number(localStorage.getItem("saldo"));
+     const tipo = document.getElementById("tipoMovimiento").value; // "Deposito" o "Retiro"
+
 
     if (!monto || monto <= 0) {
         alert("Ingresa un monto válido");
         return false;
     }
 
+    if (tipo === "Retiro" && monto > saldo) {
+        alert("Saldo insuficiente para retirar");
+        return false;
+    }
+
+
+    const accionTexto = (tipo === "Retiro") ? "retirar" : "depositar";
+
     const confirmar = confirm(
-        `¿Estás seguro que deseas depositar $${monto.toLocaleString("es-CL")}?`
+        `¿Estás seguro que deseas ${accionTexto} $${monto.toLocaleString("es-CL")}?`
     );
 
     if (!confirmar) {
         return false;
     }
 
-    saldo += monto;
+    if (tipo === "Retiro") {
+        saldo -= monto;
+    } else {
+        saldo += monto;
+    }
     localStorage.setItem("saldo", saldo);
 
-    // Guardar transacción
+    // Guardar transacción (historial)
     const transacciones = JSON.parse(localStorage.getItem("transacciones")) || [];
     transacciones.unshift({
-     tipo: "Depósito",
-    monto: monto,
-    detalle: "Depósito a la cuenta",
-    fecha: new Date().toLocaleString("es-CL", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit"
-    })
+        tipo: (tipo === "Retiro") ? "Retiro" : "Depósito",
+        monto: monto,
+        detalle: (tipo === "Retiro") ? "Retiro de fondos" : "Depósito a la cuenta",
+        fecha: new Date().toLocaleString("es-CL", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit"
+        })
     });
     localStorage.setItem("transacciones", JSON.stringify(transacciones));
 
 
-    alert("Depósito realizado con éxito");
+
+    alert(tipo === "Retiro" ? "Retiro realizado con éxito" : "Depósito realizado con éxito");
 
     // limpiar input
     inputAmount.value = "";
