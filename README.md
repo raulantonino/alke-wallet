@@ -1,24 +1,52 @@
-# Alke Wallet (Frontend)
+# Alke Wallet — Proyecto Frontend
 
-Proyecto del módulo 2: Fundamentos del desarrollo Frontend.
+Repositorio correspondiente a mi entrega del módulo de Frontend del curso **Desarrollo de Aplicaciones Fullstack Python Trainee**.
 
-## Demo / Cómo ejecutar
-1. Descarga el repositorio o clónalo.
-2. Abre el archivo `index.html` en tu navegador (o usa “Open with Live Server” en VSCode).
+El objetivo del proyecto es practicar fundamentos de **HTML**, **CSS**, **Bootstrap**, **JavaScript**, **JQuery** y el flujo de trabajo con **Git/GitHub**.
 
-## Credenciales de prueba
+El proyecto no incluye backend ni base de datos: el comportamiento es una simulación y el estado se guarda en el navegador.
+
+---
+
+## Ejecución
+- Abrir `index.html` en el navegador.  
+
+### Credenciales de prueba
 - Email: `admin@admin.com`
 - Contraseña: `1234`
 
-## Funcionalidades
+---
+
+## Funcionalidades implementadas
 - Login con validación básica.
 - Menú principal con saldo disponible.
-- Depósitos y retiros (actualiza saldo y registra movimientos).
-- Enviar dinero a contacto (autocompletar + botón “Agregar contacto” con prompt).
-- Movimientos: listado estilo fintech con filtro por tipo y opción de borrar historial.
-- Persistencia de datos con `localStorage` (`saldo` y `transacciones`).
-- UI responsive con Bootstrap.
-- Uso de jQuery en la pantalla de Movimientos.
+- Depósitos y retiros (actualiza el saldo).
+- Envío de dinero a contactos (búsqueda + opción de agregar contacto).
+- Movimientos: registro de transacciones con filtro por tipo y opción de borrar historial.
 
-## Tecnologías
-HTML, CSS, JavaScript, Bootstrap 5, Bootstrap Icons, jQuery, Git/GitHub.
+## Persistencia (simulación)
+Se utiliza `localStorage` para almacenar:
+- `saldo`
+- `transacciones`
+
+---
+
+## Estructura del proyecto
+```text
+alke-wallet/
+├─ index.html            # Login
+├─ menu.html             # Menú principal
+├─ deposit.html          # Depósitos y retiros
+├─ sendmoney.html        # Enviar dinero
+├─ transactions.html     # Movimientos
+└─ assets/
+   ├─ css/
+   │  └─ main.css        # Estilos propios
+   └─ js/
+      ├─ login.js
+      ├─ menu.js
+      ├─ deposit.js
+      ├─ sendmoney.js
+      └─ transactions.js
+```
+Autor: Raúl Ortega
